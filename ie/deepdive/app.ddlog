@@ -1,0 +1,215 @@
+@source
+actor_movie_dbdata(
+    @key
+    actor_name text,
+    @key
+    movie_name text
+).
+
+@source
+articles(
+        id text,
+        content text
+).
+
+@source
+sentences(
+        doc_id text,
+        sentence_index int,
+        sentences_text text,
+        tokens text[],
+        lemmas text[],
+        pos_tags text[],
+        ner_tags text[],
+        doc_offsets int[],
+        dep_types text[],
+        dep_tokens int[]
+).
+
+function nlp_markup over (
+        doc_id text,
+        content text
+    ) returns rows like sentences
+    implementation "udf/nlp_markup.sh" handles tsv lines.
+
+sentences += nlp_markup(doc_id, content) :-
+    articles(doc_id, content).
+
+@extraction
+actor_mention(
+        mention_id text,
+        mention_text text,
+        doc_id text,
+        sentences_index int,
+        begin_index int,
+        end_index int
+).
+
+function map_actor_mention over(
+        doc_id text,
+        sentence_index int,
+        tokens text[],
+        pos_tags text[],
+        ner_tags text[]
+    ) returns rows like actor_mention
+implementation "udf/map_actor_mention.py" handles tsv lines.
+
+actor_mention += map_actor_mention(
+    doc_id, sentence_index, tokens, pos_tags, ner_tags
+    ) :-
+    sentences(doc_id, sentence_index, _, tokens, _, pos_tags, ner_tags, _, _, _).
+
+@extraction
+movie_mention(
+        mention_id text,
+        mention_text text,
+        doc_id text,
+        sentences_index int,
+        begin_index int,
+        end_index int
+    ).
+
+function map_movie_mention over(
+    doc_id text,
+    sentence_index int,
+    tokens text[],
+    pos_tags text[],
+    ner_tags text[]
+) returns rows like movie_mention
+implementation "udf/map_movie_mention.py" handles tsv lines.
+
+movie_mention += map_movie_mention(
+doc_id, sentence_index, tokens, pos_tags, ner_tags
+) :-
+    sentences(doc_id, sentence_index, _, tokens, _, pos_tags, ner_tags, _, _, _).
+
+@extraction
+play_candidate(
+    p1_id text,
+    p1_name text,
+    p2_id text,
+    p2_name text
+).
+
+num_entity(doc_id, sentence_index, COUNT(p) + COUNT(q)) :-
+	actor_mention(p, _, doc_id, sentence_index, _, _),
+	movie_mention(q, _, doc_id, sentence_index, _, _).
+
+function map_play_candidate over (
+    p1_id text,
+    p1_name text,
+    p2_id text,
+    p2_name text
+) returns rows like play_candidate
+implementation "udf/map_play_candidate.py" handles tsv lines.
+
+play_candidate += map_play_candidate(p1, p1_name, p2, p2_name) :-
+    num_entity(same_doc, same_sentence, num_e),
+    actor_mention(p1, p1_name, same_doc, same_sentence, p1_begin, _),
+    movie_mention(p2, p2_name, same_doc, same_sentence, p2_begin, _),
+    num_e < 5,
+    p1_name != p2_name,
+    p1_begin != p2_begin.
+
+play_feature(
+    p1_id text,
+    p2_id text,
+    feature text
+).
+
+function extract_play_features over (
+    p1_id          text,
+    p2_id          text,
+    p1_begin_index int,
+    p1_end_index   int,
+    p2_begin_index int,
+    p2_end_index   int,
+    doc_id         text,
+    sent_index     int,
+    tokens         text[],
+    lemmas         text[],
+    pos_tags       text[],
+    ner_tags       text[],
+    dep_types      text[],
+    dep_tokens     int[]
+) returns rows like play_feature
+implementation "udf/extract_play_features.py" handles tsv lines.
+
+play_feature += extract_play_features(
+p1_id, p2_id, p1_begin_index, p1_end_index, p2_begin_index, p2_end_index,
+doc_id, sent_index, tokens, lemmas, pos_tags, ner_tags, dep_types, dep_tokens
+) :-
+    actor_mention(p1_id, _, doc_id, sent_index, p1_begin_index, p1_end_index),
+    movie_mention(p2_id, _, doc_id, sent_index, p2_begin_index, p2_end_index),
+    sentences(doc_id, sent_index, _, tokens, lemmas, pos_tags, ner_tags, _, dep_types, dep_tokens).
+
+@extraction
+play_label(
+    @key
+    @references(relation="has_play", column="p1_id", alias="has_play")
+    p1_id text,
+    @key
+    @references(relation="has_play", column="p2_id", alias="has_play")
+    p2_id text,
+    @navigable
+    label int,
+    @navigable
+    rule_id text
+).
+
+paly_label(p1, p2, 0, NULL) :- play_candidate(p1, _, p2, _).
+
+play_label(p1, p2, 3, "from_dbdata") :-
+    play_candidate(p1, p1_name, p2, p2_name),
+    actor_movie_dbdata(n1, n2),
+    [lower(n1) = lower(p1_name), lower(n2) = lower(p2_name)].
+
+function supervise over (
+    p1_id text, p1_begin int, p1_end int,
+    p2_id text, p2_begin int, p2_end int,
+    doc_id text,
+    doc_id text,
+    sentence_index int,
+    sentence_text text,
+    tokens text[],
+    lemmas text[],
+    pos_tags text[],
+    ner_tags text[],
+    dep_types text[],
+    dep_tokens int[]
+) returns (p1_id text, p2_id text, label int, rule_id text)
+implementation "udf/supervise_play.py" handles tsv lines.
+
+play_label += supervise(
+    p1_id, p1_begin, p1_end,
+    p2_id, p2_begin, p2_end,
+    doc_id, sentence_index, sentence_text,
+    tokens, lemmas, pos_tags, ner_tags, dep_types, dep_tokens_indexes
+    ) :-
+    play_candidate(p1_id, _, p2_id, _),
+    actor_mention(p1_id, p1_text, doc_id, sentence_index, p1_begin, p1_end),
+    movie_mention(p2_id, p2_text, _, _, p2_begin, p2_end),
+    sentences(  doc_id, sentence_index, sentence_text,
+                tokens, lemmas, pos_tags, ner_tags, _, dep_types, dep_tokens_indexes
+    ).
+
+play_label_resolved(p1_id, p2_id, SUM(vote)) :-
+    play_label(p1_id, p2_id, vote, rule_id).
+
+@extraction
+has_play?(
+    p1_id text,
+    p2_id text
+).
+
+has_play(p1_id, p2_id) = if l > 0 then TRUE
+                    else if l < 0 then FALSE
+                    else NULL end :-
+                    play_label_resolved(p1_id, p2_id, l).
+
+@weight(f)
+has_play(p1_id, p2_id) :-
+    play_candidate(p1_id, _, p2_id, _),
+    play_feature(p1_id, p2_id, f).
+
+

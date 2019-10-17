@@ -1,0 +1,227 @@
+@prefix : <http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl2: <http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#owl:> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl2xml: <http://www.w3.org/2006/12/owl2-xml#> .
+@prefix Ontology_kgmovie: <http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#> .
+@base <http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl> .
+
+<http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#hasActedIn
+Ontology_kgmovie:hasActedIn rdf:type owl:ObjectProperty ;
+                            rdfs:subPropertyOf Ontology_kgmovie:owlTopObjectProperty ;
+                            owl:inverseOf Ontology_kgmovie:hasActor ;
+                            rdfs:domain Ontology_kgmovie:Actor ;
+                            rdfs:range Ontology_kgmovie:Movie .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#hasActor
+Ontology_kgmovie:hasActor rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf Ontology_kgmovie:owlTopObjectProperty ;
+                          rdfs:domain Ontology_kgmovie:Movie ;
+                          rdfs:range Ontology_kgmovie:Actor .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#hasGenre
+Ontology_kgmovie:hasGenre rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf Ontology_kgmovie:owlTopObjectProperty ;
+                          rdfs:domain Ontology_kgmovie:Movie ;
+                          rdfs:range Ontology_kgmovie:Genre .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#owlTopObjectProperty
+Ontology_kgmovie:owlTopObjectProperty rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#actor_achiem
+Ontology_kgmovie:actor_achiem rdf:type owl:DatatypeProperty ;
+                              rdfs:subPropertyOf owl2:topDataProperty ;
+                              rdfs:domain Ontology_kgmovie:Actor ;
+                              rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#actor_bio
+Ontology_kgmovie:actor_bio rdf:type owl:DatatypeProperty ;
+                           rdfs:subPropertyOf owl2:topDataProperty ;
+                           rdfs:domain Ontology_kgmovie:Actor .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#actor_birthDay
+Ontology_kgmovie:actor_birthDay rdf:type owl:DatatypeProperty ;
+                                rdfs:subPropertyOf owl2:topDataProperty ;
+                                rdfs:domain Ontology_kgmovie:Actor .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#actor_birthPlace
+Ontology_kgmovie:actor_birthPlace rdf:type owl:DatatypeProperty ;
+                                  rdfs:subPropertyOf owl2:topDataProperty ;
+                                  rdfs:domain Ontology_kgmovie:Actor .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#actor_brokerage
+Ontology_kgmovie:actor_brokerage rdf:type owl:DatatypeProperty ;
+                                 rdfs:subPropertyOf owl2:topDataProperty ;
+                                 rdfs:domain Ontology_kgmovie:Actor .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#actor_chName
+Ontology_kgmovie:actor_chName rdf:type owl:DatatypeProperty ;
+                              rdfs:subPropertyOf owl2:topDataProperty ;
+                              rdfs:domain Ontology_kgmovie:Actor ;
+                              rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#actor_constellation
+Ontology_kgmovie:actor_constellation rdf:type owl:DatatypeProperty ;
+                                     rdfs:subPropertyOf owl2:topDataProperty ;
+                                     rdfs:domain Ontology_kgmovie:Actor .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#actor_foreName
+Ontology_kgmovie:actor_foreName rdf:type owl:DatatypeProperty ;
+                                rdfs:subPropertyOf owl2:topDataProperty ;
+                                rdfs:domain Ontology_kgmovie:Actor ;
+                                rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#actor_nationality
+Ontology_kgmovie:actor_nationality rdf:type owl:DatatypeProperty ;
+                                   rdfs:subPropertyOf owl2:topDataProperty ;
+                                   rdfs:domain Ontology_kgmovie:Actor .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#actor_repWorks
+Ontology_kgmovie:actor_repWorks rdf:type owl:DatatypeProperty ;
+                                rdfs:subPropertyOf owl2:topDataProperty ;
+                                rdfs:domain Ontology_kgmovie:Actor .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#genre_name
+Ontology_kgmovie:genre_name rdf:type owl:DatatypeProperty ;
+                            rdfs:subPropertyOf owl2:topDataProperty ;
+                            rdfs:domain Ontology_kgmovie:Genre ;
+                            rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#movie_achiem
+Ontology_kgmovie:movie_achiem rdf:type owl:DatatypeProperty ;
+                              rdfs:subPropertyOf owl2:topDataProperty ;
+                              rdfs:domain Ontology_kgmovie:Movie ;
+                              rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#movie_bio
+Ontology_kgmovie:movie_bio rdf:type owl:DatatypeProperty ;
+                           rdfs:subPropertyOf owl2:topDataProperty ;
+                           rdfs:domain Ontology_kgmovie:Movie .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#movie_chName
+Ontology_kgmovie:movie_chName rdf:type owl:DatatypeProperty ;
+                              rdfs:subPropertyOf owl2:topDataProperty ;
+                              rdfs:domain Ontology_kgmovie:Movie .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#movie_director
+Ontology_kgmovie:movie_director rdf:type owl:DatatypeProperty ;
+                                rdfs:subPropertyOf owl2:topDataProperty ;
+                                rdfs:domain Ontology_kgmovie:Movie ;
+                                rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#movie_foreName
+Ontology_kgmovie:movie_foreName rdf:type owl:DatatypeProperty ;
+                                rdfs:subPropertyOf owl2:topDataProperty ;
+                                rdfs:domain Ontology_kgmovie:Movie .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#movie_genre
+Ontology_kgmovie:movie_genre rdf:type owl:DatatypeProperty ;
+                             rdfs:subPropertyOf owl2:topDataProperty ;
+                             rdfs:domain Ontology_kgmovie:Movie ;
+                             rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#movie_language
+Ontology_kgmovie:movie_language rdf:type owl:DatatypeProperty ;
+                                rdfs:subPropertyOf owl2:topDataProperty ;
+                                rdfs:domain Ontology_kgmovie:Movie ;
+                                rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#movie_length
+Ontology_kgmovie:movie_length rdf:type owl:DatatypeProperty ;
+                              rdfs:subPropertyOf owl2:topDataProperty ;
+                              rdfs:domain Ontology_kgmovie:Movie ;
+                              rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#movie_prodCompany
+Ontology_kgmovie:movie_prodCompany rdf:type owl:DatatypeProperty ;
+                                   rdfs:subPropertyOf owl2:topDataProperty ;
+                                   rdfs:domain Ontology_kgmovie:Movie .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#movie_prodTime
+Ontology_kgmovie:movie_prodTime rdf:type owl:DatatypeProperty ;
+                                rdfs:subPropertyOf owl2:topDataProperty ;
+                                rdfs:domain Ontology_kgmovie:Movie .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#movie_rekeaseTime
+Ontology_kgmovie:movie_rekeaseTime rdf:type owl:DatatypeProperty ;
+                                   rdfs:subPropertyOf owl2:topDataProperty ;
+                                   rdfs:domain Ontology_kgmovie:Movie ;
+                                   rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#movie_screenwriter
+Ontology_kgmovie:movie_screenwriter rdf:type owl:DatatypeProperty ;
+                                    rdfs:subPropertyOf owl2:topDataProperty ;
+                                    rdfs:domain Ontology_kgmovie:Movie ;
+                                    rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#movie_star
+Ontology_kgmovie:movie_star rdf:type owl:DatatypeProperty ;
+                            rdfs:subPropertyOf owl2:topDataProperty ;
+                            rdfs:domain Ontology_kgmovie:Movie ;
+                            rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#owl:topDataProperty
+owl2:topDataProperty rdf:type owl:DatatypeProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#Actor
+Ontology_kgmovie:Actor rdf:type owl:Class ;
+                       owl:disjointWith Ontology_kgmovie:Genre ,
+                                        Ontology_kgmovie:Movie .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#Genre
+Ontology_kgmovie:Genre rdf:type owl:Class ;
+                       owl:disjointWith Ontology_kgmovie:Movie .
+
+
+###  http://www.semanticweb.org/ontologies/2018/7/Ontology_kgmovie.owl#Movie
+Ontology_kgmovie:Movie rdf:type owl:Class .
+
+
+###  Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi

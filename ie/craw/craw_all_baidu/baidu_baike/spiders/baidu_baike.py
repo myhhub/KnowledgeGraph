@@ -14,7 +14,7 @@ from twisted.internet import reactor
 from scrapy.http import Request
 from bs4 import BeautifulSoup
 import re
-import urlparse
+import urllib
 import json
 
 class BaiduBaikeSpider(scrapy.Spider, object):
@@ -100,7 +100,7 @@ class BaiduBaikeSpider(scrapy.Spider, object):
         for link in inter_links:
             new_url = link["href"]
             url_name = link.get_text()
-            new_full_url = urlparse.urljoin('https://baike.baidu.com/', new_url)
+            new_full_url = urllib.parse.urljoin('https://baike.baidu.com/', new_url)
             inter_links_dict[url_name] = new_full_url
         try:
             item['interLink'] = json.dumps(inter_links_dict)
@@ -113,7 +113,7 @@ class BaiduBaikeSpider(scrapy.Spider, object):
         for link in exterLink_links:
             new_url = link["href"]
             url_name = link.get_text()
-            new_full_url = urlparse.urljoin('https://baike.baidu.com/', new_url)
+            new_full_url = urllib.parse.urljoin('https://baike.baidu.com/', new_url)
             exter_links_dict[url_name] = new_full_url
         try:
             item['exterLink'] = json.dumps(exter_links_dict)
@@ -133,5 +133,5 @@ class BaiduBaikeSpider(scrapy.Spider, object):
         links = soup.find_all('a', href=re.compile(r"/item/"))
         for link in links:
             new_url = link["href"]
-            new_full_url = urlparse.urljoin('https://baike.baidu.com/', new_url)
+            new_full_url = urllib.parse.urljoin('https://baike.baidu.com/', new_url)
             yield scrapy.Request(new_full_url, callback=self.parse)

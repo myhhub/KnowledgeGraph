@@ -3,6 +3,7 @@
 
 from scrapy.commands import ScrapyCommand
 from scrapy.crawler import CrawlerRunner
+from scrapy.exceptions import UsageError
 from scrapy.utils.project import get_project_settings
 from scrapy.crawler import Crawler
 from scrapy.utils.conf import arglist_to_dict
@@ -38,7 +39,7 @@ class Command(ScrapyCommand):
 
         spider_loader = self.crawler_process.spider_loader
         for spidername in args or spider_loader.list():
-            print "*********cralall spidername************" + spidername
+            print("*********cralall spidername************" + spidername)
             self.crawler_process.crawl(spidername, **opts.spargs)
 
         self.crawler_process.start()    

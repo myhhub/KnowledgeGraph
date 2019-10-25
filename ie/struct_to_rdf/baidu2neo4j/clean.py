@@ -13,7 +13,7 @@ class Clean(object):
         :return clean word
         """
         word = word.strip()
-        
+
         if clean_level == "title":
             word = word.strip().strip("\"").replace("\n", " ").replace("\"","").strip(u"\\")
         elif clean_level == "subject":

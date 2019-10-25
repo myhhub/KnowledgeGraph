@@ -77,9 +77,9 @@ ITEM_PIPELINES = {
 }
  
 HOST_IP = 'localhost'  
-PORT = '3306'
+PORT = 3306
 USER = 'root'
-PASSWD = 'nlp'
+PASSWD = 'root'
 DB_NAME = 'hudong_fenlei'
 
 # Enable and configure the AutoThrottle extension (disabled by default)

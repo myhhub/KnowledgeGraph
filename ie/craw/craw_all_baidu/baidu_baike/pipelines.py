@@ -8,9 +8,6 @@ from __future__ import absolute_import
 from __future__ import division     
 from __future__ import print_function
 
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
 
 import pymysql
 from pymysql import connections
@@ -20,7 +17,7 @@ class BaiduBaikePipeline(object):
     def __init__(self):
         self.conn = pymysql.connect(
             host=settings.HOST_IP,
-#            port=settings.PORT,
+            port=settings.PORT,
             user=settings.USER,
             passwd=settings.PASSWD,
             db=settings.DB_NAME,
@@ -31,19 +28,19 @@ class BaiduBaikePipeline(object):
 
     def process_item(self, item, spider):
         # process info for actor
-        title = str(item['title']).decode('utf-8')
-        title_id = str(item['title_id']).decode('utf-8')
-        abstract = str(item['abstract']).decode('utf-8')
-        infobox = str(item['infobox']).decode('utf-8')
-        subject = str(item['subject']).decode('utf-8')
-        disambi = str(item['disambi']).decode('utf-8')
-        redirect = str(item['redirect']).decode('utf-8')
-        curLink = str(item['curLink']).decode('utf-8')
-        interPic = str(item['interPic']).decode('utf-8')
-        interLink = str(item['interLink']).decode('utf-8')
-        exterLink = str(item['exterLink']).decode('utf-8')
-        relateLemma = str(item['relateLemma']).decode('utf-8')
-        all_text = str(item['all_text']).decode('utf-8').encode('utf-8')
+        title = str(item['title']).encode('utf-8')
+        title_id = str(item['title_id']).encode('utf-8')
+        abstract = str(item['abstract']).encode('utf-8')
+        infobox = str(item['infobox']).encode('utf-8')
+        subject = str(item['subject']).encode('utf-8')
+        disambi = str(item['disambi']).encode('utf-8')
+        redirect = str(item['redirect']).encode('utf-8')
+        curLink = str(item['curLink']).encode('utf-8')
+        interPic = str(item['interPic']).encode('utf-8')
+        interLink = str(item['interLink']).encode('utf-8')
+        exterLink = str(item['exterLink']).encode('utf-8')
+        relateLemma = str(item['relateLemma']).encode('utf-8')
+        all_text = str(item['all_text']).encode('utf-8')
 
 #        self.cursor.execute("SELECT disambi FROM lemmas;")
 #        disambi_list = self.cursor.fetchall()
@@ -69,7 +66,7 @@ class BaiduBaikePipeline(object):
             print("curLink: ", curLink, "\n")
             print(e, "\n", "#"*20)
             try:
-                all_text = str('None').decode('utf-8').encode('utf-8')
+                all_text = str('None').encode('utf-8').encode('utf-8')
                 self.cursor.execute(sql, (title, title_id, abstract, infobox, subject, disambi, redirect, curLink, interPic, interLink, exterLink, relateLemma, all_text ))
                 self.conn.commit()
             except Exception as f:

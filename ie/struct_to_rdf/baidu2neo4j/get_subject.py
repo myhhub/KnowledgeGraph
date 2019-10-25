@@ -5,16 +5,16 @@ from collections import defaultdict
 from clean import Clean
 from tqdm import tqdm
 
-with open("./410_baidu/410_disambi_subject.csv") as inf:
+with open("./410_baidu/410_disambi_subject.csv", "r",encoding='utf-8') as inf:
     lines = inf.readlines()
 #    all_subject = defaultdict(list)
     total_subject = []
-    f = open("./410_baidu/disambi_subject.csv", "w")
+    f = open("./410_baidu/disambi_subject.csv", "w",encoding='utf-8')
     for line in tqdm(lines):
         words = line.strip().split(",")
-        disambi = Clean.clean_word(words[0].decode('utf-8'), clean_level='disambi').encode("utf-8")
+        disambi = Clean.clean_word(words[0], clean_level='disambi')
         subjects = words[1:]
-        subjects = [Clean.clean_word(s.decode('utf-8'), clean_level="subject").encode("utf-8") for s in subjects]
+        subjects = [Clean.clean_word(s, clean_level="subject") for s in subjects]
 #        subjects = [s.replace("\"", "").strip("\\") for s in subjects]
 #        subjects = [s.strip() for s in subjects]
         total_subject.extend(subjects)
@@ -25,6 +25,6 @@ with open("./410_baidu/410_disambi_subject.csv") as inf:
 #        all_subject[disambi].append(subjects)
     f.close()
     total_subject = list(set(total_subject))
-    print "Total subjects: ", len(total_subject)
-    with open("./410_baidu/all_subject.csv", "w") as ouf:
+    print("Total subjects: ", len(total_subject))
+    with open("./410_baidu/all_subject.csv", "w",encoding='utf-8') as ouf:
         ouf.write("\"" + "\"\n\"".join(total_subject) + "\"")

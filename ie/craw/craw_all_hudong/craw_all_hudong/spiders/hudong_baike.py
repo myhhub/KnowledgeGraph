@@ -14,7 +14,7 @@ from twisted.internet import reactor
 from scrapy.http import Request
 from bs4 import BeautifulSoup
 import re
-import urlparse
+import urllib
 import json
 
 strong = re.compile(r".*?<strong>(.*?)</strong>.*?")
@@ -129,7 +129,7 @@ class CrawAllHudongSpider(scrapy.Spider, object):
                 inter_links_title = ["None"+i for i in range(len(inter_links))]
             for link, link_text in zip(inter_links, inter_links_title):
                 if not link.startswith("http"):
-                    link = urlparse.urljoin('http://www.baike.com/', link)
+                    link = urllib.parse.urljoin('http://www.baike.com/', link)
                 inter_links_dict[link_text] = link
             try:
                 item['interLink'] = json.dumps(inter_links_dict)
@@ -172,7 +172,7 @@ class CrawAllHudongSpider(scrapy.Spider, object):
 
         for link in seen_links:
             if link.startswith("/wiki"):
-                link = urlparse.urljoin('http://www.baike.com/', link)
+                link = urllib.parse.urljoin('http://www.baike.com/', link)
             if link.find("baike") == -1:
                 continue
 #            print("@"*10, "link: ", link)

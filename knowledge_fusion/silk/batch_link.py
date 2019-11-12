@@ -94,7 +94,7 @@ class SilkCmd(object):
                     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
                      "rdfs": "http://www.w3.org/2000/01/rdf-schema#"}
         for prefix in prefixes:
-            print "prefix: ", prefix
+            print("prefix: ", prefix)
             data_dict[prefix] = prefixes[prefix]
         res = requests.put(url, data = data_dict, headers=self.header_dict)
         return res.text
@@ -144,7 +144,7 @@ class JenaCmd(object):
     @staticmethod
     def load_nt(tdb_path, nt_path, jena_path="/home1/peng/project/apache-jena-3.7.0/bin"):
         status, out = commands.getstatusoutput('sh {}/tdbloader --loc="{}" "{}"'.format(jena_path, tdb_path, nt_path))
-        print out
+        print(out)
         return status
 
 def seg_nt(source_nt, max_len=5000000.0):
@@ -152,7 +152,7 @@ def seg_nt(source_nt, max_len=5000000.0):
     _, total_line = commands.getstatusoutput("wc -l {}".format(source_nt))
     total_line = total_line.split()[0]
     seg_file_name = source_nt.strip(".nt")
-    print "total_line: ", type(total_line), total_line, math.ceil(float(total_line)/max_len)
+    print("total_line: ", type(total_line), total_line, math.ceil(float(total_line) / max_len))
     for i in tqdm(range(int(math.ceil(float(total_line)/max_len)))):
         ith_file_name = seg_file_name + "_" + str(i) + ".nt"
         status, _ = commands.getstatusoutput("sed -n '{},{}p' {} > {}".format(int(max_len*(i)+1), int(max_len*(i+1)), source_nt, ith_file_name))

@@ -36,7 +36,7 @@ if __name__ == "__main__":
     subprocess.Popen(['sh', os.path.join(args.fuseki, 'fuseki-server')], shell=False, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     time.sleep(5)
     for idx, nt in enumerate(nts):
-        print "nt", nt
+        print("nt", nt)
         out_file_list = seg_nt(nt, max_len=args.maxNtLength)
         for file in out_file_list:
             dbName = file.split("/")[-1].strip(".nt")
@@ -48,7 +48,7 @@ if __name__ == "__main__":
             jm.add_tdb(dbName=dbName)
             JenaCmd.load_nt("./tdb_" + dbName, file)
             status, out = commands.getstatusoutput('cp {}/* {}'.format("./tdb_" + dbName, os.path.join(args.fuseki, "run/databases/") + dbName))
-            print out
+            print(out)
     # restart fuseki server
     _, out = commands.getstatusoutput("netstat -tunlp|grep 3030")
     uid = out.split()[-1].strip("/java')")
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     sm.add_prefix(prefixes)
     # add Sparql endpoint datasets
     for dname in hudong_name + baidu_name:
-        print sm.build_endPoint( dname, "http://{}:3030/{}/query".format(args.ip, dname), "500000")
+        print(sm.build_endPoint(dname, "http://{}:3030/{}/query".format(args.ip, dname), "500000"))
 
     # build linking task
     linking_rule = '<LinkageRule linkType="owl:sameAs"><Compare metric="levenshteinDistance" id="levenshteinDistance1" required="false" threshold="0.0" weight="1"><TransformInput function="lowerCase" id="lowerCase1"><Input path="baidu:lemmas_disambi" id="sourcePath1"/></TransformInput><TransformInput function="lowerCase" id="lowerCase2"><Input path="hudong:lemmas_disambi" id="targetPath1"/></TransformInput><Param name="minChar" value="0"/><Param name="maxChar" value="z"/></Compare><Filter/></LinkageRule>'
@@ -86,8 +86,8 @@ if __name__ == "__main__":
             odata_file = "o_" + hname + bname + ".nt"
             o_rdf = "d_" + hname + bname
             task_name = "t_" + hname + bname
-            print sm.add_rule(linking_rule, project_name=args.projectName, task_name=task_name)
-            print "task_name: ", type(task_name), task_name
+            print(sm.add_rule(linking_rule, project_name=args.projectName, task_name=task_name))
+            print("task_name: ", type(task_name), task_name)
             sm = SilkCmd()
-            print sm.control_linking(project_name=args.projectName, task_name=task_name)
+            print(sm.control_linking(project_name=args.projectName, task_name=task_name))
             time.sleep(60*60*5)

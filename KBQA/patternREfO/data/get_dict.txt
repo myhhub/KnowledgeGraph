@@ -1,0 +1,6 @@
+use baidu_baike;
+select actor_chName from actor into outfile '/var/lib/mysql-files/baidu_actorName.txt';
+select movie_chName from movie into outfile '/var/lib/mysql-files/baidu_movieName.txt';
+use hudong_baike;
+select actor_chName from actor into outfile '/var/lib/mysql-files/hudong_actorName.txt';
+select movie_chName from movie into outfile '/var/lib/mysql-files/hudong_movieName.txt';

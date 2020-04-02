@@ -1,0 +1,11 @@
+# 修改mysql 中默认字符集到utf8
+
+ALTER TABLE table_name CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+查看自己的字符集
+
+SHOW FULL COLUMNS FROM table_name;
+
+更改表中某一属性的类型：把actor_achiem 变为TEXT
+
+ALTER TABLE actor CHANGE actor_achiem actor_achiem TEXT;

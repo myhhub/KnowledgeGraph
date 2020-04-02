@@ -1,0 +1,35 @@
+# Commands to creat mysql database and tables. This database includes actors and films. 
+
+# 演员 : ID, 简介， 中文名，外文名，国籍，星座，出生地，出生日期，代表作品，主要成就，经纪公司；
+# actor: actor_id, actor_bio, actor_chName, actor_foreName, actor_nationality, actor_constellation, actor_birthPlace, actor_birthDay, actor_repWorks, actor_achiem, actor_brokerage;
+
+# 电影作品：ID，简介，中文名，外文名，出品时间，出品公司，导演，编剧，类型，主演，片长，上映时间，对白语言，主要成就；
+# movie: movie_id, movie_bio, movie_chName, movie_foreName, movie_prodTime, movie_prodCompany, movie_director, movie_screenwriter, movie_genre, movie_star, movie_length, movie_rekeaseTime, movie_language, movie_achiem;
+
+# 电影类型：爱情，喜剧，动作，剧情，科幻，恐怖，动画，惊悚，犯罪，冒险，其他；
+# genre: genre_id, genre_name
+
+# 演员->电影： 演员ID， 电影ID；
+# actor_to_movie: actor_id, movie_id;
+
+# 电影-> 类型： 电影ID， 类型ID
+# movie_to_genre: movie_id, genre_id
+
+CREATE DATABASE kg_movie;
+USE kg_movie;
+
+CREATE TABLE actor( actor_id INT NOT NULL,  actor_bio TEXT, actor_chName VARCHAR(100), actor_foreName VARCHAR(100), actor_nationality VARCHAR(100), actor_constellation VARCHAR(100), actor_birthPlace VARCHAR(100), actor_birthDay VARCHAR(100), actor_repWorks VARCHAR(100), actor_achiem TEXT, actor_brokerage VARCHAR(100), PRIMARY KEY(actor_id) );
+
+CREATE TABLE movie( movie_id INT NOT NULL, movie_bio TEXT, movie_chName VARCHAR(100), movie_foreName VARCHAR(100), movie_prodTime VARCHAR(100),  movie_prodCompany VARCHAR(100), movie_director VARCHAR(100), movie_screenwriter VARCHAR(100), movie_genre VARCHAR(100), movie_star VARCHAR(100), movie_length VARCHAR(100), movie_rekeaseTime VARCHAR(100), movie_language VARCHAR(100), movie_achiem TEXT, PRIMARY KEY(movie_id) );
+
+CREATE TABLE actor_to_movie( actor_movie_id INT NOT NULL, actor_id INT NOT NULL, movie_id INT NOT NULL, PRIMARY KEY(actor_movie_id) );
+
+CREATE TABLE genre ( genre_id INT NOT NULL, genre_name VARCHAR(100), PRIMARY KEY(genre_id)  );
+# Set char Set
+ALTER TABLE actor CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE movie CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE genre CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+INSERT INTO genre (genre_id, genre_name) VALUES (0, '爱情'), (1, '喜剧'), (2, '动作'), (3, '剧情'), (4, '科幻'), (5, '恐怖'), (6, '动画'), (7, '惊悚'), (8, '犯罪'), (9, '冒险'), (10, '其他');
+
+CREATE TABLE movie_to_genre( movie_genre_id INT NOT NULL, movie_id INT NOT NULL, genre_id INT NOT NULL, PRIMARY KEY(movie_genre_id) );

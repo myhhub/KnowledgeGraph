@@ -2,7 +2,7 @@
 知识图谱学习教程
 
 ## 一、基础知识
-1. [知识图谱基础 之 一.知识图谱基本概念](https://www.ljjyy.com/archives/2019/11/100604.html)
+1. [知识图谱基础 之 一.知识图谱基本概念](https://www.ljjyy.com/archives/2019/11/100629.html)
 2. [知识图谱基础 之 二.知识表示与知识建模](https://www.ljjyy.com/archives/2019/11/100605.html)
 3. [知识图谱基础 之 三.知识抽取](https://www.ljjyy.com/archives/2019/11/100606.html)
 4. [知识图谱基础 之 四.知识挖掘](https://www.ljjyy.com/archives/2019/11/100607.html)
